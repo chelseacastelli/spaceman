@@ -11,7 +11,7 @@ def load_word():
     words_list = f.readlines()
     f.close()
 
-    words_list = words_list[0].split(' ')
+    words_list = words_list[0].split(' ') #comment this line out if you use a words.txt file with each word on a new line
     secret_word = random.choice(words_list)
     return secret_word
 
@@ -83,4 +83,4 @@ def spaceman(secret_word):
 
 #These function calls that will start the game
 secret_word = load_word()
-spaceman(load_word())
+spaceman(secret_word)
