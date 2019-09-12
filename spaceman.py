@@ -110,15 +110,15 @@ def valid_input(guess):
     Returns:
         bool: True if the input was valid, False otherwise
     '''
-
-    if len(guess) > 1:
-        print("Guess only one letter. ")
-
-    elif guess in letters_guessed:
+    if guess in letters_guessed:
         print("You already guessed that letter. ")
 
-    elif guess.isnumeric():
-        print("No numbers. ")
+    elif not guess.isalpha():
+        print("Letters only. ")
+
+    elif len(guess) > 1:
+        print("Guess only one letter. ")
+
     else:
         return True
 
