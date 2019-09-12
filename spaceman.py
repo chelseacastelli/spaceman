@@ -92,7 +92,7 @@ def start_game():
     '''
     A function that outputs the starting menu for the game
     '''
-    print("\nWelcome! Let's play Spaceman :)\nTry guessing the secret word one letter at a time\nbefore the Spaceman is drawn.\n")
+    print("\nWelcome! Let's play Spaceman :)\nTry guessing the secret word one letter\nat a time before the Spaceman is drawn.\n")
 
 def play_again():
     '''
@@ -150,7 +150,7 @@ def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
     '''
 
     #TODO: show the player information about the game according to the project spec
-    print(f"There are {len(secret_word)} letters in this word so you get {len(secret_word)} guesses. Choose wisely.\nGo!\n\n{get_guessed_word(secret_word, letters_guessed)}")
+    print(f"There are {len(secret_word)} letters in this word so you get {len(secret_word)} guesses.\nChoose wisely.\nGo!\n\n{get_guessed_word(secret_word, letters_guessed)}")
     guesses_left = len(secret_word)
 
     while guesses_left > 0:
