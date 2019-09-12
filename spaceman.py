@@ -74,6 +74,11 @@ def is_guess_in_word(guess, secret_word):
         return False
 
 def user_input(prompt):
+    '''
+    Function takes in user input.
+    Returns:
+        user_input (string): Letter guessed by user
+    '''
     user_input = input(prompt)
     return user_input
 
@@ -139,7 +144,9 @@ def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
     Args:
-      secret_word (string): the secret word to guess.
+        secret_word (string): the secret word to guess.
+    Returns:
+        bool: True if the user wants to play the game again, False otherwise
     '''
 
     #TODO: show the player information about the game according to the project spec
