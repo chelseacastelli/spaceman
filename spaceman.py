@@ -78,17 +78,61 @@ def user_input(prompt):
     return user_input
 
 def clear():
+    '''
+    A function that clears the terminal for better readability
+    '''
     _ = call('clear' if os.name =='posix' else 'cls')
 
 def start_game():
-    print("\nWelcome! Let's play Spaceman :)\nTry guessing the secret word one letter at a time\nbefore the Spaceman is drawn.\nYou get 7 incorrect guesses.. choose wisely.\nGO!\n")
+    '''
+    A function that outputs the starting menu for the game
+    '''
+    print("\nWelcome! Let's play Spaceman :)\nTry guessing the secret word one letter at a time\nbefore the Spaceman is drawn.\n")
 
 def play_again():
-    play_again = user_input("Would you like to play again? (y/n) ")
+    '''
+    A function that asks the user if they want to play again
+
+    Returns:
+        bool: True if they say yes, False otherwise
+    '''
+    play_again = user_input("Would you like to play again? (y/n): ")
     if play_again.lower() == 'y':
         clear()
         return True
     clear()
+    return False
+
+def valid_input(guess):
+    '''
+    A function that checks the user input is valid. Checks for more than one character, if the letter was already guessed, or if a number is inputted.
+
+    Returns:
+        bool: True if the input was valid, False otherwise
+    '''
+
+    if len(guess) > 1:
+        print("Guess only one letter. ")
+
+    elif guess in letters_guessed:
+        print("You already guessed that letter. ")
+
+    elif guess.isnumeric():
+        print("No numbers. ")
+    else:
+        return True
+
+    return False
+
+def is_word_solved():
+    '''
+    A function that checks if the word has been guessed by searching for any more blanks
+
+    Returns:
+        bool: True if word has been guessed (no more blanks), False otherwise
+    '''
+    if '_' not in get_guessed_word(secret_word, letters_guessed):
+        return True
     return False
 
 def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
@@ -99,22 +143,19 @@ def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
     '''
 
     #TODO: show the player information about the game according to the project spec
-    print(f"Guess the {len(secret_word)} letter word\n\n{get_guessed_word(secret_word, letters_guessed)}")
+    print(f"There are {len(secret_word)} letters in this word so you get {len(secret_word)} guesses. Choose wisely.\nGo!\n\n{get_guessed_word(secret_word, letters_guessed)}")
+    guesses_left = len(secret_word)
 
-    #TODO: Ask the player to guess one letter per round and check that it is only one letter
     while guesses_left > 0:
-        if '_' not in get_guessed_word(secret_word, letters_guessed):
-            print("You got it!\n")
-            return play_again()
 
+        #TODO: Ask the player to guess one letter per round and check that it is only one letter
         guess = user_input("\nEnter your guess: ")
-        if len(guess) > 1:
-            guess = user_input("Input only one letter: ")
-        if guess in letters_guessed:
-            guess = user_input("You already guessed that letter! Try again: ")
+        while not valid_input(guess):
+            guess = user_input("Try again: ")
+
         letters_guessed.append(guess)
 
-
+        # Clear terminal for cleaner output
         clear()
 
         #TODO: Check if the guessed letter is in the secret or not and give the player feedback
@@ -129,8 +170,18 @@ def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
         print(f"{guesses_left} guesses left\n")
         print(get_guessed_word(secret_word, letters_guessed) + '\n')
 
-    print("\nSorry, you lost!")
-    return play_again()
+        # Check if every letter has been guessed (no more blanks)
+        if is_word_solved():
+            clear()
+            print('\n')
+            print(get_guessed_word(secret_word, letters_guessed))
+            print('\n')
+            print(f"You got it! & with {guesses_left} guesses left.. great job!\n")
+            return play_again()
+
+        elif not is_word_solved() and guesses_left == 0:
+            print(f"\nSorry, you lost! The word was {secret_word}\n")
+            return play_again()
 
 
 def test():
@@ -147,6 +198,6 @@ while running:
     start_game()
     word_with_guesses = []
     letters_guessed = []
-    guesses_left = 7
+    guesses_left = 0
     secret_word = load_word()
     running = spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left)
