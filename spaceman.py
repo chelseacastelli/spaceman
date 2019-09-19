@@ -191,14 +191,6 @@ def spaceman(secret_word, word_with_guesses, letters_guessed, guesses_left):
             return play_again()
 
 
-def test():
-    pass
-    #print(is_guess_in_word('s', secret_word))
-    #print(get_guessed_word(secret_word, letters_guessed))
-
-#These function calls that will start the game
-
-#test()
 running = True
 while running:
 
